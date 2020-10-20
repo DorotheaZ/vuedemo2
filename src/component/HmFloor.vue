@@ -1,6 +1,10 @@
 <template>
   <div>
-    <hm-floor v-if="parent.parent" :parent="parent.parent"></hm-floor>
+    <hm-floor
+      :count="count - 1"
+      v-if="parent.parent"
+      :parent="parent.parent"
+    ></hm-floor>
     <div class="hm-floor" :class="{ top: !parent.parent }">
       <div class="header">
         <div class="left">{{ count }}楼 {{ parent.user.nickname }}</div>

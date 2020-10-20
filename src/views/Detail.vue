@@ -1,19 +1,21 @@
 <template>
   <div>
     <div class="header">
-      <div class="left" @click="$router.back()">
-        <i class="iconfont iconjiantou2"></i>
-      </div>
-      <div class="center">
-        <i class="iconfont iconnew"></i>
-      </div>
-      <div class="right">
-        <div v-if="detail.has_follow" class="follow" @click="unfollow">
-          已关注
+      <div class="fix">
+        <div class="left" @click="$router.back()">
+          <i class="iconfont iconjiantou2"></i>
         </div>
-        <div v-else class="follow" @click="follow">关注</div>
+        <div class="center">
+          <i class="iconfont iconnew"></i>
+        </div>
+        <div class="right">
+          <div v-if="detail.has_follow" class="follow" @click="unfollow">
+            已关注
+          </div>
+          <div v-else class="follow" @click="follow">关注</div>
+        </div>
+        <van-dialog></van-dialog>
       </div>
-      <van-dialog></van-dialog>
     </div>
     <!-- 内容 -->
     <div class="container">
@@ -33,17 +35,18 @@
       ></div>
       <!-- 2. 视频 -->
       <video v-else :src="detail.content" controls></video>
-    </div>
-    <div class="bottom">
-      <div
-        class="like"
-        @click="like(detail.id)"
-        :class="{ active: detail.has_like }"
-      >
-        <i class="iconfont icondianzan"></i>
-        <i>{{ detail.like_length }}</i>
+      <div class="bottom">
+        <div
+          class="like"
+          @click="like(detail.id)"
+          :class="{ active: detail.has_like }"
+        >
+          <i class="iconfont icondianzan"></i>
+          <i>{{ detail.like_length }}</i>
+        </div>
       </div>
     </div>
+
     <div ref="box"></div>
     <!-- 评论 -->
     <div class="comments">
@@ -117,7 +120,7 @@ export default {
       this.replyName = replyName
       this.isShow = true
       await this.$nextTick()
-      this.$refs.textarea.focus()
+      this.$refs.textarea && this.$refs.textarea.focus()
     })
   },
   methods: {
@@ -214,38 +217,40 @@ export default {
   color: #f00;
 }
 .header {
-  position: fixed;
   width: 100%;
+  position: fixed;
   z-index: 999;
-  display: flex;
-  height: 50px;
-  border-bottom: 1px solid #ccc;
-  align-items: center;
-  background-color: #fff;
-  .left {
-    width: 40px;
-    text-align: center;
-    i {
-      font-size: 20px;
-    }
-  }
-  .center {
-    flex: 1;
-    padding-left: 10px;
-    i {
-      font-size: 50px;
-    }
-  }
-  .right {
-    width: 80px;
-    // background: pink;
-    .follow {
-      border: 1px solid #666;
-      width: 60px;
-      height: 24px;
+  .fix {
+    display: flex;
+    height: 50px;
+    border-bottom: 1px solid #ccc;
+    align-items: center;
+    background-color: #fff;
+    .left {
+      width: 40px;
       text-align: center;
-      line-height: 26px;
-      border-radius: 12px;
+      i {
+        font-size: 20px;
+      }
+    }
+    .center {
+      flex: 1;
+      padding-left: 10px;
+      i {
+        font-size: 50px;
+      }
+    }
+    .right {
+      width: 80px;
+      // background: pink;
+      .follow {
+        border: 1px solid #666;
+        width: 60px;
+        height: 24px;
+        text-align: center;
+        line-height: 26px;
+        border-radius: 12px;
+      }
     }
   }
 }
@@ -253,6 +258,7 @@ export default {
 .container {
   padding: 10px;
   padding-top: 50px;
+
   .title {
     font-size: 20px;
     font-weight: 700;
