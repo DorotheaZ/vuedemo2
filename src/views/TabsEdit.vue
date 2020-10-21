@@ -32,16 +32,32 @@ export default {
   created() {
     this.getActiveTabs()
   },
+  watch: {
+    activeTabs(newVal) {
+      console.log(newVal)
+      localStorage.setItem('activeTabs', JSON.stringify(newVal))
+      localStorage.setItem('deactiveTabs', JSON.stringify(this.deactiveTabs))
+    },
+  },
   methods: {
     async getActiveTabs() {
+      let activeTabs = JSON.parse(localStorage.getItem('activeTabs'))
+      let deactiveTabs = JSON.parse(localStorage.getItem('deactiveTabs'))
+      if (activeTabs && deactiveTabs) {
+        this.activeTabs = activeTabs
+        this.deactiveTabs = deactiveTabs
+        return
+      }
       let res = await this.$axios.get('/category')
       const { statusCode, data } = res.data
       if (statusCode === 200) {
         this.activeTabs = data
       }
     },
-    add() {
-      console.log(11)
+    add(id) {
+      let tab = this.deactiveTabs.find(v => v.id == id)
+      this.activeTabs.push(tab)
+      this.deactiveTabs = this.deactiveTabs.filter(v => v.id != id)
     },
     del(id) {
       let tab = this.activeTabs.find(v => v.id == id)
