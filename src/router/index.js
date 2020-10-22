@@ -10,6 +10,7 @@ import MyStar from '../views/MyStar.vue'
 import Home from '../views/Home.vue'
 import Detail from '../views/Detail.vue'
 import TabsEdit from '../views/TabsEdit.vue'
+import Search from '../views/Search.vue'
 
 Vue.use(VueRouter)
 
@@ -58,6 +59,10 @@ const router = new VueRouter({
     {
       path: '/tabsEdit',
       component: TabsEdit
+    },
+    {
+      path: '/search',
+      component: Search
     }
   ]
 })

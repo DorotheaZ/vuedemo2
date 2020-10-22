@@ -5,7 +5,7 @@
       <div class="left">
         <i class="iconfont iconnew"></i>
       </div>
-      <div class="center">
+      <div class="center" @click="$router.push('/search')">
         <span class="iconfont iconsearch"></span>
         <span class="text">搜索新闻</span>
       </div>
@@ -60,6 +60,15 @@ export default {
   created() {
     this.getTabsList()
   },
+  activated() {
+    console.log('activated')
+    let activeTabs = JSON.parse(localStorage.getItem('activeTabs'))
+    if (activeTabs) {
+      this.tabsList = activeTabs
+      this.active = 1
+      this.getPostList(this.tabsList[this.active].id)
+    }
+  },
   watch: {
     active(newActive) {
       this.postList = []
@@ -71,6 +80,11 @@ export default {
   },
   methods: {
     async getTabsList() {
+      let activeTabs = JSON.parse(localStorage.getItem('activeTabs'))
+      if (activeTabs) {
+        this.tabsList = activeTabs
+        return
+      }
       let res = await this.$axios.get('/category')
       this.tabsList = res.data.data
       // 请求完tabsList 才有 postList

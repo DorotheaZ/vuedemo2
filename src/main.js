@@ -5,6 +5,7 @@ import './style/base.less'
 import './style/iconfont.css'
 import 'lib-flexible'
 import axios from 'axios'
+import _ from 'lodash'
 import HmHeader from './component/HmHeader.vue'
 import HmLogo from './component/HmLogo.vue'
 import HmButton from './component/HmButton.vue'
@@ -43,7 +44,7 @@ Vue.use(Cell)
 Vue.use(CellGroup)
 Vue.use(PullRefresh)
 
-
+Vue.prototype.$_ = _
 Vue.prototype.$axios = axios
 axios.defaults.baseURL = 'http://localhost:3000'
 

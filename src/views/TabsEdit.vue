@@ -60,9 +60,16 @@ export default {
       this.deactiveTabs = this.deactiveTabs.filter(v => v.id != id)
     },
     del(id) {
-      let tab = this.activeTabs.find(v => v.id == id)
-      this.deactiveTabs.push(tab)
-      this.activeTabs = this.activeTabs.filter(v => v.id != id)
+      if (this.activeTabs.length > 3) {
+        let tab = this.activeTabs.find(v => v.id == id)
+        this.deactiveTabs.push(tab)
+        this.activeTabs = this.activeTabs.filter(v => v.id != id)
+      } else {
+        this.$dialog.confirm({
+          title: '温馨提示',
+          message: '关注不可低于三条~',
+        })
+      }
     },
   },
 }
